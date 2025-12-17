@@ -1,0 +1,6 @@
+tensorflow==2.10.0
+streamlit
+numpy
+pandas
+matplotlib
+Pillow
