@@ -44,3 +44,9 @@ if uploaded_file is not None:
 
     st.success(f"**Prediction:** {result}")
     st.info(f"**Confidence:** {confidence:.2f}%")
+
+    import os
+if __name__ == "__main__":
+    if "STREAMLIT_RUN" not in os.environ:
+        os.environ["STREAMLIT_RUN"] = "true"
+        os.system(f"streamlit run \"{__file__}\"")
