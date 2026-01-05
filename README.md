@@ -1,59 +1,50 @@
-Smart Agriculture: Plant Disease Detection Using Deep Learning
+# 🌿 PlantCare AI: Smart Agriculture Disease Detection
+
+PlantCare AI is an industrial-grade automated solution designed to tackle agricultural yield loss. Leveraging Deep Learning and high-performance hardware, the system identifies **38 different categories** of healthy and diseased leaves with an impressive **93% precision**, providing instant diagnosis and actionable solutions.
 
 ![Project Preview](templates/background.png)
 
-🚀 Project Overview
+## 🌟 What's New? (V2.0 Update)
+- **Modern Web Interface:** Shifted from Gradio to a fully custom **Glassmorphism UI** using Tailwind CSS.
+- **Real-time Diagnosis:** Instant leaf examination with confidence scoring.
+- **Actionable Insights:** Not just detection, the system now provides specific **Descriptions** and **Recommended Actions (Solutions)** for each disease.
 
-This project addresses the critical challenge of agricultural yield loss due to plant diseases. We have developed an automated AI solution that identifies 38 different categories of healthy and diseased plant leaves with high precision (93%), enabling farmers to take timely action.
+## 📊 Key Performance Metrics
+- **Validation Accuracy:** ~93% (92.85%)
+- **Weighted Average F1-Score:** 0.93
+- **Dataset:** 54,305 high-resolution images from the **PlantVillage Dataset**.
+- **Hardware Optimization:** Trained and optimized using **NVIDIA GeForce RTX 3090 GPU**.
 
-🔗 Repository Link
-GitHub Repo: https://github.com/abdulrafayza01/Plant-Disease-Detection-RTX3090.git
+## 🏗️ Methodology & Architecture
+The system utilizes a custom **Convolutional Neural Network (CNN)** specifically tuned for plant pathology:
+- **Input Layer:** 256x256 RGB images.
+- **Feature Extraction:** Multi-layer CNN identifying intricate patterns like leaf spots, chlorosis, and textures.
+- **Output Layer:** Softmax activation providing probabilities across 38 distinct classes.
 
-📊 Key Performance Metrics
+## 💻 Tech Stack
+- **Deep Learning:** TensorFlow / Keras (Core Engine).
+- **Backend:** Flask (Python).
+- **Frontend:** HTML5, Tailwind CSS (Glass-card Design), JavaScript (Async API Fetch).
+- **Hardware Acceleration:** oneDNN optimized for RTX 3090.
 
-Validation Accuracy: 92.85% (Approx. 93%)
+## ⚡ Execution & Installation
 
-Weighted Average F1-Score: 0.93
+### 1. Installation
 
-Dataset Size: 54,305 images from the PlantVillage Dataset
+    ```bash```
+    git clone [https://github.com/abdulrafayza01/Plant-Disease-Detection-RTX3090.git](https://github.com/abdulrafayza01/Plant-Disease-Detection-RTX3090.git)
 
-Training Hardware: Optimized using NVIDIA GeForce RTX 3090 GPU.
+    cd Plant-Disease-Detection-RTX3090
 
-🏗️ Methodology & Architecture
+    pip install -r requirements.txt
 
-The system utilizes a custom Convolutional Neural Network (CNN) architecture designed specifically for plant pathology.
+### 2. Run the Application
 
-Input Layer: 256x256 RGB leaf images.
+    Standard Run: python app.py
 
-Core: Multi-layer CNN for feature extraction of patterns, spots, and textures.
-
-Output: Softmax prediction across 38 distinct classes.
-
-💻 Tech Stack
-
-Deep Learning Framework: TensorFlow / Keras.
-
-Web Interface: Streamlit (Real-time Dashboard).
-
-Optimization: oneDNN optimized for hardware acceleration.
-
-⚡ Easy Execution (Gradio-Style)
-
-We have optimized the execution process for developers. You no longer need to type complex commands.
-
-VS Code Debugger: Simply open app.py and press F5. The project is pre-configured with launch.json to automatically start the Streamlit server.
-
-Direct Script Run: You can also run it like a standard Python script: python app.py.
+    VS Code (F5): Pre-configured with launch.json for one-click debugging.
 
 📈 Results & Visualizations
 The model successfully identifies complex diseases like Tomato Late Blight. Detailed training history (Accuracy/Loss curves) is documented in the plant_disease.ipynb notebook.
 
-🛠️ Installation
-
-Clone the repository:
-Bash
-git clone https://github.com/abdulrafayza01/Plant-Disease-Detection-RTX3090.git
-
-Install Dependencies:
-Bash
-pip install -r requirements.txt
+Developed with ❤️ for Smart Agriculture by Abdul Rafay
