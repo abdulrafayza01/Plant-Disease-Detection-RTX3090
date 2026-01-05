@@ -1,5 +1,7 @@
 Smart Agriculture: Plant Disease Detection Using Deep Learning
 
+![Project Preview](templates/Background.png)
+
 🚀 Project Overview
 
 This project addresses the critical challenge of agricultural yield loss due to plant diseases. We have developed an automated AI solution that identifies 38 different categories of healthy and diseased plant leaves with high precision (93%), enabling farmers to take timely action.

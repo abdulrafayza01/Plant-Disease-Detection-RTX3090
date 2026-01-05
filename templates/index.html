@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlantCare AI - Disease Detector</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+        }
+        
+        body {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)), 
+                        url('https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(72, 187, 120, 0.5);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased text-white">
+
+    <div class="min-h-screen flex flex-col items-center justify-center p-6">
+        <div class="max-w-md w-full glass-card p-8 shadow-2xl">
+            <div class="text-center mb-8">
+                <h1 class="text-4xl font-extrabold text-green-400 mb-2">🌿 PlantCare AI</h1>
+                <p class="text-gray-200 text-sm tracking-wide">Protecting your crops with Intelligence</p>
+            </div>
+
+            <form id="upload-form" class="space-y-6">
+                <div id="preview-container" class="hidden mb-4">
+                    <img id="imagePreview" class="w-full h-48 object-cover rounded-lg border-2 border-green-500 shadow-md">
+                    <button type="button" onclick="resetUpload()" class="mt-2 text-xs text-red-400 hover:text-red-300 underline block mx-auto">Change Image</button>
+                </div>
+
+                <div id="upload-box" class="relative group">
+                    <input type="file" id="fileInput" class="hidden" accept="image/*">
+                    <label for="fileInput" class="flex flex-col items-center justify-center border-2 border-dashed border-green-400/50 rounded-xl p-8 text-center cursor-pointer hover:border-green-400 hover:bg-green-400/10 transition-all">
+                        <svg class="w-10 h-10 text-green-400 mb-3 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                        <span class="text-sm font-medium">Click to upload leaf photo</span>
+                        <span class="text-xs text-gray-400 mt-1">JPG, PNG or JPEG</span>
+                    </label>
+                </div>
+
+                <button type="submit" class="w-full bg-green-500 hover:bg-green-600 text-white py-3 rounded-xl font-bold text-lg shadow-lg transform hover:-translate-y-1 transition-all active:scale-95">
+                    Analyze Disease
+                </button>
+            </form>
+
+            <div id="loading" class="hidden mt-8 text-center">
+                <div class="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-green-400 mb-2"></div>
+                <p class="text-green-400 font-medium italic">AI is examining the leaf...</p>
+            </div>
+
+            <div id="result-card" class="hidden mt-8 pt-6 border-t border-white/10">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 id="res-title" class="text-2xl font-bold text-green-300"></h2>
+                    <span id="res-conf" class="text-xs font-bold bg-green-900/50 text-green-300 px-3 py-1 rounded-full border border-green-500/30"></span>
+                </div>
+                
+                <div class="space-y-4">
+                    <div>
+                        <h3 class="text-sm font-bold uppercase tracking-wider text-gray-400">Diagnosis:</h3>
+                        <p id="res-desc" class="text-gray-100 text-sm leading-relaxed"></p>
+                    </div>
+                    
+                    <div class="bg-green-950/40 p-4 rounded-xl border border-green-500/20 shadow-inner">
+                        <h3 class="text-sm font-bold uppercase tracking-wider text-green-400 mb-1">Recommended Action:</h3>
+                        <p id="res-sol" class="text-green-50 text-sm leading-relaxed"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <p class="mt-8 text-white/40 text-xs text-center">Developed for Smart Agriculture By Abdul Rafay &copy; 2025</p>
+    </div>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const previewContainer = document.getElementById('preview-container');
+        const imagePreview = document.getElementById('imagePreview');
+        const uploadBox = document.getElementById('upload-box'); // Naya selector
+
+        // Image Preview + Hide Upload Box Logic
+        fileInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                
+                // 1. Preview ko dikhao
+                previewContainer.classList.remove('hidden');
+                // 2. Upload Box ko chupa do
+                uploadBox.classList.add('hidden'); 
+                
+                reader.onload = function(e) {
+                    imagePreview.setAttribute('src', e.target.result);
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Function to reset upload if user wants to change image
+        function resetUpload() {
+            fileInput.value = "";
+            previewContainer.classList.add('hidden');
+            uploadBox.classList.remove('hidden');
+            document.getElementById('result-card').classList.add('hidden');
+        }
+
+        document.getElementById('upload-form').onsubmit = async (e) => {
+            e.preventDefault();
+            if (!fileInput.files[0]) return alert("Please select a leaf image first!");
+
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
+
+            document.getElementById('loading').classList.remove('hidden');
+            document.getElementById('result-card').classList.add('hidden');
+
+            try {
+                const response = await fetch('/predict', { method: 'POST', body: formData });
+                const data = await response.json();
+
+                document.getElementById('loading').classList.add('hidden');
+                document.getElementById('result-card').classList.remove('hidden');
+                
+                document.getElementById('res-title').innerText = data.prediction;
+                document.getElementById('res-conf').innerText = data.confidence;
+                document.getElementById('res-desc').innerText = data.description;
+                document.getElementById('res-sol').innerText = data.solution;
+            } catch (error) {
+                alert("Error connecting to server!");
+                document.getElementById('loading').classList.add('hidden');
+            }
+        };
+    </script>
+</body>
+</html>
