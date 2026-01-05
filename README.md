@@ -1,6 +1,6 @@
 Smart Agriculture: Plant Disease Detection Using Deep Learning
 
-![Project Preview](templates/Background.png)
+![Project Preview](templates/background.png)
 
 🚀 Project Overview
 
